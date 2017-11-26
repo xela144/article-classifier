@@ -4,3 +4,4 @@ ac/
 .ipynb_checkpoints
 .DS*
 credentials.py
+__pycache__
