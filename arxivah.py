@@ -23,7 +23,7 @@ def arxiv_query(cat, num_results, start=0):
         the_articles = [the_articles]
     return the_articles
 
-def insert(articles, server):
+def insert(articles, server,startnum):
     keys = art.keys()
 
     # Get the arXiv category of the article.
@@ -100,7 +100,7 @@ def insert(articles, server):
                       has_journal_ref, summary_length, summary_wc, primary_category, category_other)
 
     # Do some logging
-    print("pubdate:{} title:{} author:{}".format(timestamp, title, first_auth))
+    print("<{}> pubdate:{} title:{} author:{}".format(startnum, timestamp, title, first_auth))
 
 
 if __name__ == '__main__':
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     for jj in range(0, 40, 10):
         the_articles = arxiv_query(cat=LG, num_results=10, start=jj)
         for art in the_articles:
-            insert(art, sv)
+            insert(art, sv, jj)
         time.sleep(4)
 
     print("done")
