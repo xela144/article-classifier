@@ -3,9 +3,14 @@ import xmltodict
 import json
 import time
 from db import psqlServer
-
+from pdb import set_trace as pp
 LG = 'cat:cs.LG'
 AI = 'cat:cs.AI'
+GRQC= 'cat:gr-qc'
+MATH_NT = 'cat:math.NT'
+MATH_FA = 'cat:math.FA'
+QFIN_ST = 'cat:q-fin.ST'
+
 RESULTLIM = 'max_results='
 START = '&start='
 
@@ -95,7 +100,7 @@ def insert(articles, server,startnum):
     num_auth = len(authors)
     first_auth = authors[0]['name']
 
-    statement = "INSERT INTO arx (pub_date, title, author, abstract, num_auth, num_pages, num_figs, journal_ref, has_journal_ref, summary_length, summary_wc, category, category_other)"
+    statement = "INSERT INTO arx_grqc (pub_date, title, author, abstract, num_auth, num_pages, num_figs, journal_ref, has_journal_ref, summary_length, summary_wc, category, category_other)"
     statement += " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
     sv.execute_insert(statement, timestamp, title, first_auth, summary, num_auth, num_pages, num_figs, journal_ref,
                       has_journal_ref, summary_length, summary_wc, primary_category, category_other)
@@ -105,11 +110,12 @@ def insert(articles, server,startnum):
 
 
 if __name__ == '__main__':
-    primary_category = AI.split(':')[1]
+
+    primary_category = GRQC.split(':')[1]
     sv = psqlServer()
 
-    for jj in range(12000, 13000, 1000):
-        the_articles = arxiv_query(cat=LG, num_results=1000, start=jj)
+    for jj in range(0, 50000, 1000):
+        the_articles = arxiv_query(cat=GRQC, num_results=1000, start=jj)
         for art in the_articles:
             insert(art, sv, jj)
         time.sleep(10)
