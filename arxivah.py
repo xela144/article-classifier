@@ -5,6 +5,7 @@ import time
 from db import psqlServer
 
 LG = 'cat:cs.LG'
+AI = 'cat:cs.AI'
 RESULTLIM = 'max_results='
 START = '&start='
 
@@ -104,13 +105,13 @@ def insert(articles, server,startnum):
 
 
 if __name__ == '__main__':
-    primary_category = LG.split(':')[1]
+    primary_category = AI.split(':')[1]
     sv = psqlServer()
 
-    for jj in range(0, 40, 10):
-        the_articles = arxiv_query(cat=LG, num_results=10, start=jj)
+    for jj in range(12000, 13000, 1000):
+        the_articles = arxiv_query(cat=LG, num_results=1000, start=jj)
         for art in the_articles:
             insert(art, sv, jj)
-        time.sleep(4)
+        time.sleep(10)
 
     print("done")
