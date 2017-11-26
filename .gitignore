@@ -1,0 +1,6 @@
+*.swp
+ac/
+.idea
+.ipynb_checkpoints
+.DS*
+credentials.py
